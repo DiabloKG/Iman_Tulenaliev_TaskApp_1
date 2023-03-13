@@ -3,12 +3,14 @@ package com.example.iman_tulenaliev_taskapp_1.ui.home
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.iman_tulenaliev_taskapp_1.App
 import com.example.iman_tulenaliev_taskapp_1.R
 import com.example.iman_tulenaliev_taskapp_1.databinding.FragmentHomeBinding
+import com.google.android.gms.tasks.Task
 
 class HomeFragment : Fragment() {
 
@@ -39,13 +41,18 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        taskAdapter = TaskAdapter(this::onLongClickListener)
+        taskAdapter = TaskAdapter(this::onLongClickListener, this::onClickListener)
     }
 
     private fun initViews() {
         binding.rvHome.layoutManager = LinearLayoutManager(context)
         binding.rvHome.adapter = taskAdapter
         getDataFromLocalDB()
+    }
+
+    private fun onClickListener(position: Int) {
+        val task = taskAdapter.getTask(position)
+        findNavController().navigate(R.id.navigation_newTask, bundleOf(EDIT_KEY to task))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -100,5 +107,8 @@ class HomeFragment : Fragment() {
             dialog.dismiss()
         }
         builder.show()
+    }
+    companion object{
+        const val EDIT_KEY = "editTask"
     }
 }

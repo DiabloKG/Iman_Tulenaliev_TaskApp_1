@@ -9,4 +9,4 @@ data class TaskModel(
     var id: Long? = null,
     var title: String? = null,
     var desc: String? = null
-)
+):java.io.Serializable

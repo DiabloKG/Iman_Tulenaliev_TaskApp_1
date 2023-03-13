@@ -1,15 +1,15 @@
 package com.example.iman_tulenaliev_taskapp_1.database.local
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.iman_tulenaliev_taskapp_1.ui.home.TaskModel
 
 @Dao
 interface TaskDao {
     @Insert
     fun insert(task: TaskModel)
+
+    @Update
+    fun update(task: TaskModel)
 
     @Delete
     fun deleteTask(task: TaskModel)
